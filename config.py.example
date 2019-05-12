@@ -5,4 +5,4 @@ memcache_address = 'localhost'
 memcache_port =  11211
 invalidation_time = 86400 # this is the time we can store something in memcache before it is known as invalid
 use_dtdd_web_api = True
-dtdd_web_api_address = "http://127.0.0.1:5000" # this is the address the dtdd_api can be found at
+dtdd_web_api_address = "http://dtdd.valknight.xyz" # this is the address the dtdd_api can be found at

@@ -15,6 +15,8 @@ Some of the people using my Plex server (myself included) sometimes go through r
 
 To speed up requests, a web API wrapper can be used - this is so that, if many different versions of this app are hitting the same API, only one request will need to hit the original DTDD, without having all the different versions have access to the memcache. It also means other tools that wish to use DTDD can also call upon the API, whether that be a proper Plex agent, or some other tool for you Jellyfin weirdos.
 
+I recommend you use the API that is set in the example config (dtdd.valknight.xyz), as that means the more users there are, the more likely your requested media is to be cached, however, if you are privacy conscious, you can setup your own, or avoid the web API solution altogether.
+
 ## How to get started (CLI tools)
 
 0. Install python 3.4+ and create a virtual environment for this

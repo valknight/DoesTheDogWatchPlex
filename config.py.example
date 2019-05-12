@@ -1,0 +1,2 @@
+token = "-----------" # your API token - find this by looking at the network requests from Plex
+url = "http://127.0.0.1:32400" - the URL at which your server can be accessed

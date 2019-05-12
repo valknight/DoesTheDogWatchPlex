@@ -1,2 +1,8 @@
 token = "-----------" # your API token - find this by looking at the network requests from Plex
 url = "http://127.0.0.1:32400" - the URL at which your server can be accessed
+use_memcache =  False
+memcache_address = 'localhost'
+memcache_port =  11211
+invalidation_time = 86400 # this is the time we can store something in memcache before it is known as invalid
+use_dtdd_web_api = True
+dtdd_web_api_address = "http://127.0.0.1:5000" # this is the address the dtdd_api can be found at

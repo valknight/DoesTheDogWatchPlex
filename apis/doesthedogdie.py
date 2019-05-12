@@ -1,9 +1,28 @@
 from bs4 import BeautifulSoup
 import urllib.parse
 import requests
+import time
+import json
+try:
+    from config import use_memcache
+    if  use_memcache:
+        try:
+            from config import memcache_address, memcache_port, invalidation_time
+        except ImportError:
+            print("⚠ Please set memcache_address, memcache_port and invalidation_time in config.py")
+            use_memcache = False
+except ImportError:
+    print("⚠ Please set use_memcache in config.py")
+    use_memcache = False
+
+if use_memcache:
+    from pymemcache.client import base
+    client = base.Client((memcache_address, memcache_port))
+    print("✅ Established memcache client")
+else:
+    print("⚠ memcache is disabled - we recommend you enable it to improve performance")
 
 base_string = "https://www.doesthedogdie.com/{media_id}"
-
 
 def get_topics(media_id):
     resp = requests.get(base_string.format(media_id=media_id))
@@ -43,12 +62,32 @@ def search(search_string):
         if "media/" in names[counter]['href']:
             return names[counter]['href']
         counter += 1
-    print("❌ Could not find movie {} in DTDD".format(search_string))
     return None
     
-def get_info_for_movie(movie_name):
-    key = (search(movie_name))
-    if key is not None:
-        return get_info(key)
-    else:
-        return None
+def get_info_for_movie(movie_name, use_cache=True):
+    movie_name = movie_name.lower()
+    movie_name = urllib.parse.quote_plus(movie_name)
+    data = client.get(movie_name)
+    if use_cache and use_memcache: # use_memcache is the global config, use_cache is if we don't want to hit the cache on this occasion
+        invalid = False
+        if data is None:
+            invalid = True
+        else:
+            try:
+                data =  json.loads(data)
+                if int(data['time_retrieved']) - time.time() > invalidation_time:
+                    invalid = True
+                else:
+                    data = data['data']
+            except:
+                invalid = True
+        
+    if invalid or not(use_cache):
+        key = search(movie_name)
+        if key is not None:
+            data = get_info(key)
+            if use_memcache: # this allows us to force refresh data if we want
+                client.set(movie_name, json.dumps(dict(data=data, time_retrieved=int(time.time()))))
+        else:
+            data = None
+    return data

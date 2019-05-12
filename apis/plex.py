@@ -58,6 +58,7 @@ def write_data(movie):
                     statuses.append(status[2])
                 else:
                     statuses.append(status[0])
+        statuses.sort()
         if use_short_names:
             ddtd_status = "This may contain: {}".format(', '.join(statuses))
         else:

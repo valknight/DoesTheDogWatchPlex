@@ -9,7 +9,7 @@ def dtdd_index():
     return {"status": "You're probably wanting to make a request to /media/[movie name]"}
 
 @app.route("/media/<key>", methods=['GET'])
-def notes_detail(key):
+def movie_details(key):
     key = str(key)
     to_return = get_info_for_movie(key)
     if to_return == None:

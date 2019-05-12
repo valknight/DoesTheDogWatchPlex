@@ -53,7 +53,7 @@ def main():
         print("🐶 Getting data from DoesTheDogDie.com")
         if not use_memcache:
             print("⚠ You aren't using a memcache or an external API for DTDD - this will take a while")
-    for movie in tqdm(movies[0:10]):
+    for movie in tqdm(movies):
         if use_dtdd_web_api:
             resp = requests.get("{}/media/{}".format(dtdd_web_api_address, movie['title']))
             if resp.status_code == 200:

@@ -43,7 +43,6 @@ Recommended: setup memcache - this will greatly improve performance
 - TV series support
 - Moving to an agent instead of this hacky setup
 - Customizing splitter between the actual summary and content warnings
-- Performance improvements in the processing of results from doesthedogdie.com
 
 ## LICENSE
 

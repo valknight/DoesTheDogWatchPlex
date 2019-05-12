@@ -1,8 +1,25 @@
 # This should be ran as a service if you want to make use of the web API tech without requesting the main one
 from flask_api import FlaskAPI
 from apis.doesthedogdie import get_info_for_movie
-
+import re
 app = FlaskAPI(__name__)
+
+to_strip = [
+    "Are( any| there)* ",
+    "Does( the| a| an| someone| it)* ",
+    "Is( a| there)* ",
+    "\?"
+]
+
+to_replace = [("die", "dies")]
+
+def shorten(topic):
+    for filter in to_strip:
+        topic = re.sub(filter, '', topic)
+    for replacement in to_replace:
+        topic = topic.replace(replacement[0], replacement[1])
+    
+    return topic
 
 @app.route("/")
 def dtdd_index():
@@ -14,6 +31,8 @@ def movie_details(key):
     to_return = get_info_for_movie(key)
     if to_return == None:
         return {"error": "cannot find movie"}, 404
+    for status in to_return:
+        status['topic_short'] = shorten(status['topic'])
     return to_return
 
 if __name__ == "__main__":

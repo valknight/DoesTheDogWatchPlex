@@ -6,3 +6,4 @@ memcache_port =  11211
 invalidation_time = 86400 # this is the time we can store something in memcache before it is known as invalid
 use_dtdd_web_api = True
 dtdd_web_api_address = "http://dtdd.valknight.xyz" # this is the address the dtdd_api can be found at
+use_short_names = False # this will simply put out what does match as a list on a single line, instead of the full question

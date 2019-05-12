@@ -26,6 +26,13 @@ except:
     print("⚠ Please set use_dtdd_web_api in your config.py")
     use_dtdd_web_api = False
 
+try:
+    from config import use_short_names
+except:
+    print("⚠ Please set use_short_names in your config.py")
+    use_short_names = False
+
+
 def yes_or_no_formatter(topic):
     action = "Unsure"
     
@@ -33,7 +40,7 @@ def yes_or_no_formatter(topic):
         action = "Yes"
     elif topic['no_votes'] > topic['yes_votes']:
         action = "No"
-    return "{topic} : {action} (Yes: {yes_votes} | No : {no_votes})".format(topic=topic['topic'], yes_votes=topic['yes_votes'], no_votes=topic['no_votes'], action=action), action
+    return "{topic} : {action} (Yes: {yes_votes} | No : {no_votes})\n".format(topic=topic['topic'], yes_votes=topic['yes_votes'], no_votes=topic['no_votes'], action=action), action, topic['topic_short']
 
 def main():
     print("⬇ Getting movies from Plex")
@@ -46,7 +53,7 @@ def main():
         print("🐶 Getting data from DoesTheDogDie.com")
         if not use_memcache:
             print("⚠ You aren't using a memcache or an external API for DTDD - this will take a while")
-    for movie in tqdm(movies):
+    for movie in tqdm(movies[0:10]):
         if use_dtdd_web_api:
             resp = requests.get("{}/media/{}".format(dtdd_web_api_address, movie['title']))
             if resp.status_code == 200:
@@ -64,7 +71,6 @@ def main():
                 yes_or_no = yes_or_no_formatter(raw_status)
                 if (not only_show_yes) or (yes_or_no[1] == "Yes"):
                     movie['statuses'].append(yes_or_no)
-
         to_write.append(movie)
 
     # all we need to do now is chuck it in a big ol' json file

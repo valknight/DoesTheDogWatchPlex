@@ -3,6 +3,16 @@ import bs4
 
 from config import token, url
 
+try:
+    from config import use_short_names
+except:
+    print("⚠ Please set use_short_names in your config.py")
+    use_short_names = False
+try:
+    from config import only_show_yes
+except:
+    print("⚠ Please set only_show_yes in your config.py")
+    only_show_yes = False
 ## DEFINE STATIC URLS FOR API
 
 get_libaries = "{base}/library/sections?X-Plex-Token={token}&X-Plex-Language=en".format(token=token, base=url)
@@ -39,9 +49,19 @@ def write_data(movie):
 
     desc_cut = movie['desc'].split("\r\n\r\ndoesthedogdie: \r\n\r\n")[0]
     statuses = []
-    for status in movie['statuses']:
-        statuses.append(status[0])
-    ddtd_status = '\r\n'.join(statuses)
+    if len(movie['statuses']) == 0:
+        ddtd_status = "No content warnings could be retrieved for this film\nThis means either this film is fine, or it isn't present on DTDD"
+    else:
+        for status in movie['statuses']:
+            if not(only_show_yes) or status[1] == "Yes":
+                if use_short_names:
+                    statuses.append(status[2])
+                else:
+                    statuses.append(status[0])
+        if use_short_names:
+            ddtd_status = "This may contain: {}".format(', '.join(statuses))
+        else:
+            ddtd_status = '\r\n'.join(statuses)
     movie['desc'] = "{}\r\n\r\ndoesthedogdie: \r\n\r\n{}".format(desc_cut, ddtd_status)
     
     movie['id']=movie['key'].strip('/library/metadata/')

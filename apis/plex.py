@@ -41,7 +41,7 @@ def write_data(movie):
     statuses = []
     for status in movie['statuses']:
         statuses.append(status[0])
-    ddtd_status = '\r\n'.join(movie['statuses'])
+    ddtd_status = '\r\n'.join(statuses)
     movie['desc'] = "{}\r\n\r\ndoesthedogdie: \r\n\r\n{}".format(desc_cut, ddtd_status)
     
     movie['id']=movie['key'].strip('/library/metadata/')

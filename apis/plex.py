@@ -40,7 +40,7 @@ def write_data(movie):
     desc_cut = movie['desc'].split("\r\n\r\ndoesthedogdie: \r\n\r\n")[0]
     statuses = []
     for status in movie['statuses']:
-        statuses.append(movie[0])
+        statuses.append(status[0])
     ddtd_status = '\r\n'.join(movie['statuses'])
     movie['desc'] = "{}\r\n\r\ndoesthedogdie: \r\n\r\n{}".format(desc_cut, ddtd_status)
     

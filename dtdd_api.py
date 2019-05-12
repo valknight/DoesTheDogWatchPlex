@@ -11,7 +11,16 @@ to_strip = [
     "\?"
 ]
 
-to_replace = [("die", "dies")]
+to_replace = [
+    ("die", "dying"), 
+    ("dies", "dying"), 
+    ("use drugs", "drug usage"), 
+    ("needles/syringes used", "needles/syringes usage"),
+    ("not have a happy ending", "no happy ending"),
+    ("break a bone", "breaking of bones"),
+    ("drown", "drowning"), 
+    ("abuse alcohol", "alcohol abuse")
+]
 
 def shorten(topic):
     for filter in to_strip:

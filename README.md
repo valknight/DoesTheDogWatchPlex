@@ -2,6 +2,7 @@
 
 > An integration of DoesTheDogDie.com and Plex Media Server
 
+![Demonstration of DoesTheDogWatchPlex using Marvel's Infinity War](/screenshots/1.png)
 ## What does this do?
 
 This modifies the summaries of movies to contain content warnings from DoesTheDogDie.com.

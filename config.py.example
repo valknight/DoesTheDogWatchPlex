@@ -7,3 +7,5 @@ invalidation_time = 86400 # this is the time we can store something in memcache 
 use_dtdd_web_api = True
 dtdd_web_api_address = "http://dtdd.valknight.xyz" # this is the address the dtdd_api can be found at
 use_short_names = False # this will simply put out what does match as a list on a single line, instead of the full question
+dtdd_api_key = "example"
+dtdd_api_enabled = True # if this is disabled, we will use the old, slower, and less useful web scraper

@@ -71,7 +71,8 @@ def get_info(media_id):
             short_name = topic.get('topic').get('smmwDescription')
             yes_votes = topic.get('yesSum')
             no_votes = topic.get('noSum')
-        
+            to_return.append(dict(topic=name, topic_short=short_name, yes_votes=yes_votes, no_votes=no_votes))
+    else:
         topics = get_topics(media_id)
         for topic in topics:
             

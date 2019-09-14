@@ -38,10 +38,12 @@ def dtdd_index():
 def movie_details(key):
     key = str(key)
     to_return = get_info_for_movie(key)
+    
     if to_return == None:
         return {"error": "cannot find movie"}, 404
     for status in to_return:
-        status['topic_short'] = shorten(status['topic'])
+        if status.get('topic_short', None) is None:
+            status['topic_short'] = shorten(status['topic'])
     return to_return
 
 if __name__ == "__main__":
